@@ -3,32 +3,7 @@ import { Alert, Container, Divider, Paper, Stack, Typography } from '@mui/materi
 import SessionForm from './components/SessionForm.jsx';
 import SessionList from './components/SessionList.jsx';
 import { addSession, deleteSession, getSessions } from './api.js';
-import { useState, useEffect } from 'react'
-import { supabase } from './utils/supabase'
 
-export default function App() {
-  const [todos, setTodos] = useState([])
-
-  useEffect(() => {
-    async function getTodos() {
-      const { data: todos } = await supabase.from('todos').select()
-
-      if (todos) {
-        setTodos(todos)
-      }
-    }
-
-    getTodos()
-  }, [])
-
-  return (
-    <ul>
-      {todos.map((todo) => (
-        <li key={todo.id}>{todo.name}</li>
-      ))}
-    </ul>
-  )
-}
 export default function App() {
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
