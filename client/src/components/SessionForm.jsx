@@ -23,7 +23,7 @@ export default function SessionForm({ onAdd, submitting }) {
 
   return (
     <Box component="form" onSubmit={handleSubmit} noValidate>
-      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems="flex-start">
+      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ alignItems: 'flex-start' }}>
         <TextField
           label="Book"
           value={book}

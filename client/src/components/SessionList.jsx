@@ -3,7 +3,7 @@ import { Button, CircularProgress, List, ListItem, ListItemText, Stack, Typograp
 export default function SessionList({ sessions, loading, deletingId, onDelete }) {
   if (loading) {
     return (
-      <Stack alignItems="center" sx={{ py: 4 }}>
+      <Stack sx={{ alignItems: 'center', py: 4 }}>
         <CircularProgress aria-label="Loading sessions" />
       </Stack>
     );

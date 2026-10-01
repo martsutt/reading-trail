@@ -69,7 +69,7 @@ export default function App() {
         </Paper>
 
         <Paper variant="outlined" sx={{ p: 3 }}>
-          <Stack direction="row" justifyContent="space-between" alignItems="baseline">
+          <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
             <Typography variant="h6" component="h2">
               Sessions
             </Typography>
