@@ -1,9 +1,23 @@
-const BASE = '/api/sessions';
+import { supabase } from './utils/supabase.js';
 
-async function request(url, options) {
+const BASE = `${import.meta.env.VITE_API_URL}/api/items`;
+
+async function request(url, options = {}) {
+  const { data, error } = await supabase.auth.getSession();
+
+  if (error || !data.session) {
+    throw new Error('Guest session unavailable');
+  }
+
   let res;
   try {
-    res = await fetch(url, options);
+    res = await fetch(url, {
+      ...options,
+      headers: {
+        ...options.headers,
+        Authorization: `Bearer ${data.session.access_token}`,
+      },
+    });
   } catch {
     throw new Error('Cannot reach the server. Is Express running?');
   }
@@ -11,9 +25,10 @@ async function request(url, options) {
   if (!res.ok) {
     let message = `Request failed (${res.status})`;
     try {
-      const data = await res.json();
-      message = data.error || data.message || message;
+      const body = await res.json();
+      message = body.error || body.message || message;
     } catch {
+      // response was not JSON, keep the default message
     }
     throw new Error(message);
   }
@@ -30,4 +45,5 @@ export const addSession = (session) =>
     body: JSON.stringify(session),
   });
 
-export const deleteSession = (id) => request(`${BASE}/${id}`, { method: 'DELETE' });
+export const deleteSession = (id) =>
+  request(`${BASE}/${id}`, { method: 'DELETE' });
